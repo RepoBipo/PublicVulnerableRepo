@@ -35,7 +35,6 @@ jobs:
           with:
            dotnet-version: |
              6.0.x
-           cache: true
            
         - name: Restore .NET
           run: dotnet restore --use-lock-file && dotnet build
