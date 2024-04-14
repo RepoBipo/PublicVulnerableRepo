@@ -38,6 +38,11 @@ jobs:
            
         - name: Restore + Build .NET
           run: dotnet restore --use-lock-file && dotnet build
+
+        - uses: actions/checkout@v3             
+        - name: Build the Docker images 
+          run: docker build . --file VulnerableApp/Dockerfile --tag my-image-name:$(date +%s)   
+          
             
         - name: Endor Labs Workflow Dispatch
           if: ${{ github.event_name == 'workflow_dispatch' }}
