@@ -36,7 +36,7 @@ jobs:
            dotnet-version: |
              6.0.x
            
-        - name: Restore .NET
+        - name: Restore + Build .NET
           run: dotnet restore --use-lock-file && dotnet build
             
         - name: Endor Labs Workflow Dispatch
@@ -44,6 +44,8 @@ jobs:
           uses: endorlabs/github-action@736c93ea52b002f2ac229aaeb273b102cbf6fe12
           with:
             namespace: ${{ github.event.inputs.tenant_name }}
+            api_key: ${{ secrets.ENDOR_API_CREDENTIALS_KEY }}
+            api_secret: ${{ secrets.ENDOR_API_CREDENTIALS_SECRET }}
             scan_summary_output_type: "table"
             pr: "false"
             enable_github_action_token: "true"
