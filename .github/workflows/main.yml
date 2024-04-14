@@ -48,7 +48,7 @@ jobs:
             api_secret: ${{ secrets.ENDOR_API_CREDENTIALS_SECRET }}
             scan_summary_output_type: "table"
             pr: "false"
-            enable_github_action_token: "true"
+            enable_github_action_token: false
             scan_dependencies: "true"
             scan_secrets: "true"
             scan_git_logs: "true"
