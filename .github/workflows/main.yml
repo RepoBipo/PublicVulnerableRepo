@@ -39,9 +39,13 @@ jobs:
         - name: Restore + Build .NET
           run: dotnet restore --use-lock-file && dotnet build
 
-        - uses: actions/checkout@v3             
+        - uses: docker/build-push-action@v4             
         - name: Build the Docker images 
-          run: docker build ./VulnerableApp  --tag my-image-name:$(date +%s)   
+          with:
+            context: ./VulnerableApp
+            push: false
+            tags: "my-image-name"
+            labels: "some-label"
           
             
         - name: Endor Labs Workflow Dispatch
