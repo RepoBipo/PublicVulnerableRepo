@@ -34,12 +34,11 @@ jobs:
             context: .
             push: false
             tags: "my-image-name"
-            labels: "some-label"
-          
+            labels: "some-label"        
             
         - name: Download Mend CLI & Run a Scan
           run: |
-           curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
+           echo $DOCKER_REPO_NAME && curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
            mend image "my-image-name" --format sarif --filename results.sarif --local-pull
       
         - name: Upload sarif
