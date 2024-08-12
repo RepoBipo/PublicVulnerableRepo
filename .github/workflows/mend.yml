@@ -35,7 +35,7 @@ jobs:
             
         - name: Download Mend CLI & Run a Scan   
           run: |
-           echo "$MEND_URL" && echo $DOCKER_IMAGE_NAME && curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
+           export MEND_URL=$MEND_URL && export MEND_EMAIL=$MEND_EMAIL && export MEND_USER_KEY=$MEND_USER_KEY && echo "$MEND_URL" && echo $DOCKER_IMAGE_NAME && curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
            mend image "my-image-name" --format sarif --filename results.sarif --local-pull
       
         - name: Upload sarif
