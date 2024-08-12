@@ -1,8 +1,6 @@
 name: Mend Scan
 on:
   workflow_dispatch:
-    inputs:
-
 env:
   DOCKER_IMAGE_NAME: "some-label"
   DOCKER_REPO_NAME: "publicvulnerableRepo"
