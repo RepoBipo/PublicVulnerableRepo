@@ -37,6 +37,13 @@ jobs:
             labels: "some-label"        
             
         - name: Download Mend CLI & Run a Scan
+          env:
+            DOCKER_IMAGE_NAME: "some-label"
+            DOCKER_REPO_NAME: "publicvulnerableRepo"
+            DOCKER_TAG: dev-${{ github.run_number }}
+            MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+            MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+            MEND_URL: https://saas.mend.io        
           run: |
            echo $MEND_URL && curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
            mend image "my-image-name" --format sarif --filename results.sarif --local-pull
