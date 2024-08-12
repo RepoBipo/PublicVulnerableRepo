@@ -1,4 +1,4 @@
-name: Endor Labs Scan
+name: Mend Scan
 on:
   workflow_dispatch:
     inputs:
