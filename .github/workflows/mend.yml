@@ -1,0 +1,55 @@
+name: Endor Labs Scan
+on:
+  workflow_dispatch:
+    inputs:
+
+env:
+  DOCKER_IMAGE_NAME: "some-label"
+  DOCKER_REPO_NAME: REPO_NAME
+  DOCKER_TAG: dev-${{ github.run_number }}
+  MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+  MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+  MEND_URL: https://saas.mend.io
+
+jobs:
+  scan-repo:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v3
+          
+        - name: Setup dotnet
+          uses: actions/setup-dotnet@v3
+          with:
+           dotnet-version: |
+             6.0.x
+           
+        - name: Restore + Build .NET
+          run: dotnet restore --use-lock-file && dotnet build
+
+        - name: Build the Docker images 
+          uses: docker/build-push-action@v4
+          with:
+            context: .
+            push: false
+            tags: $DOCKER_REPO_NAME:$DOCKER_TAG
+            labels: DOCKER_IMAGE_NAME
+          
+            
+        - name: Endor Labs Workflow Dispatch
+          if: ${{ github.event_name == 'workflow_dispatch' }}
+          uses: endorlabs/github-action@736c93ea52b002f2ac229aaeb273b102cbf6fe12
+          with:
+            namespace: ${{ github.event.inputs.tenant_name }}
+            api_key: ${{ secrets.ENDOR_API_CREDENTIALS_KEY }}
+            api_secret: ${{ secrets.ENDOR_API_CREDENTIALS_SECRET }}
+            scan_summary_output_type: "table"
+            pr: "false"
+            enable_github_action_token: false
+            scan_dependencies: "true"
+            scan_secrets: "true"
+            scan_git_logs: "true"
+            additional_args: "--as-default-branch --api=${{ github.event.inputs.api }}"
