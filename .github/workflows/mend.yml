@@ -8,7 +8,7 @@ env:
   CHECK_ME: ${{ secrets.TEST_ME }}
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
   MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
-  MEND_URL: https://saas.mend.io
+  MEND_URL: https://app-eu.whitesourcesoftware.com
 
 jobs:
   scan-repo:
