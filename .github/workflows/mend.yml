@@ -12,9 +12,6 @@ env:
 jobs:
   scan-repo:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
     steps:
         - name: Checkout Repository
           uses: actions/checkout@v3
@@ -38,7 +35,7 @@ jobs:
             
         - name: Download Mend CLI & Run a Scan   
           run: |
-           echo "$MEND_URL" && curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
+           echo "$MEND_URL" && echo $DOCKER_IMAGE_NAME && curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
            mend image "my-image-name" --format sarif --filename results.sarif --local-pull
       
         - name: Upload sarif
