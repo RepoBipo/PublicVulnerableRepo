@@ -5,6 +5,7 @@ env:
   DOCKER_IMAGE_NAME: "some-label"
   DOCKER_REPO_NAME: "publicvulnerableRepo"
   DOCKER_TAG: dev-${{ github.run_number }}
+  CHECK_ME: ${{ secrets.TEST_ME }}
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
   MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
   MEND_URL: https://saas.mend.io
@@ -35,7 +36,7 @@ jobs:
             
         - name: Download Mend CLI & Run a Scan   
           run: |
-           echo $DOCKER_IMAGE_NAME && curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend && mend auth info && mend image "my-image-name" --format sarif --filename results.sarif --local-pull
+           echo $CHECK_ME && echo $DOCKER_IMAGE_NAME && curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend && mend auth info && mend image "my-image-name" --format sarif --filename results.sarif --local-pull
       
         - name: Upload sarif
           uses: github/codeql-action/upload-sarif@v3
