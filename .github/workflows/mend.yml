@@ -5,7 +5,7 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: "some-label"
-  DOCKER_REPO_NAME: "PublicVulnerableRepo"
+  DOCKER_REPO_NAME: "publicvulnerableRepo"
   DOCKER_TAG: dev-${{ github.run_number }}
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
   MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
